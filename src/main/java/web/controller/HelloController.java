@@ -22,5 +22,5 @@ public class HelloController {
 	
 }
 /*
-* @Controller markiert unsere Klasse als ein Kontroller und erlaubt es dieser Klasse HTTP-Anfragen, die von einem Benutzer kommen, zu bearbeiten.
+* @Controller markiert unsere Klasse als einen Kontroller und erlaubt es dieser Klasse HTTP-Anfragen, die von einem Benutzer kommen, zu bearbeiten.
 * */
