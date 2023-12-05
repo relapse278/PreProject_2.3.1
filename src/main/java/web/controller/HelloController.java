@@ -19,8 +19,4 @@ public class HelloController {
 		model.addAttribute("messages", messages);
 		return "index";
 	}
-	
 }
-/*
-* @Controller markiert unsere Klasse als einen Kontroller und erlaubt es dieser Klasse HTTP-Anfragen, die von einem Benutzer kommen, zu bearbeiten.
-* */
