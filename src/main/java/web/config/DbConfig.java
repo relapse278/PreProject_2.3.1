@@ -1,7 +1,5 @@
 package web.config;
 
-import web.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +8,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import web.model.User;
 
 import javax.sql.DataSource;
 import java.util.Objects;
@@ -26,6 +27,21 @@ public class DbConfig {
 
     public DbConfig(Environment env) {
         this.env = env;
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean getEntityManager() {
+        LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
+        entityManager.setDataSource(getDataSource());
+        entityManager.setPackagesToScan(env.getProperty("db.entity.package"));
+        entityManager.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        Properties properties = new Properties();
+        properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        entityManager.setJpaProperties(properties);
+
+        return entityManager;
     }
 
     @Bean
@@ -56,7 +72,7 @@ public class DbConfig {
     public HibernateTransactionManager getTransactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(getSessionFactory().getObject());
+        //transactionManager.setE
         return transactionManager;
     }
 }
-
