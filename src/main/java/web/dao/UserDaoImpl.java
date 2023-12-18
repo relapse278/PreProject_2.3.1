@@ -1,9 +1,8 @@
 package web.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import web.model.User;
 
+import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -13,11 +12,6 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-//    @Autowired
-//    public UserDaoImpl(EntityManager entityManager) {
-//        this.entityManager = entityManager;
-//    }
-
     @Override
     public void addUser(User user) {
         entityManager.persist(user);
@@ -26,23 +20,36 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(User user) {
-
+        entityManager.detach(user);
+        entityManager.getTransaction().begin();
+        entityManager.merge(user);
+        entityManager.getTransaction().commit();
     }
 
     @Override
     public void removeUser(long id) {
-
+        entityManager.getTransaction().begin();
+        User user = entityManager.find(User.class, id);
+        if (null == user) {
+            throw new NullPointerException("User with id " + id + " not found!");
+        }
+        entityManager.remove(user);
+        entityManager.getTransaction().commit();
     }
 
     @Override
     public User getUserById(long id) {
         User user = entityManager.find(User.class, id);
+        if (null == user) {
+            throw new NullPointerException("User with id " + id + " not found!");
+        }
         entityManager.detach(user);
         return user;
     }
 
     @Override
     public List<User> listUsers() {
-        return null;
+        List<User> users = entityManager.createQuery("from User").getResultList();
+        return users;
     }
 }
