@@ -67,7 +67,7 @@ public class DbConfig {
 //        factoryBean.setAnnotatedClasses(User.class);
 //        return factoryBean;
 //    }
-
+//
 //    @Bean
 //    public HibernateTransactionManager getTransactionManager() {
 //        HibernateTransactionManager transactionManager = new HibernateTransactionManager();

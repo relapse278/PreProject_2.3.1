@@ -5,6 +5,7 @@ import web.model.User;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -49,7 +50,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> listUsers() {
-        List<User> users = entityManager.createQuery("from User").getResultList();
+        List<User> users = new ArrayList<>();
+        users = (List<User>)entityManager.createQuery("from User").getResultList();
         return users;
     }
 }
