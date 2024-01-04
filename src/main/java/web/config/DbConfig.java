@@ -8,12 +8,16 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import web.model.User;
 
 import javax.sql.DataSource;
+import javax.transaction.TransactionManager;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -54,6 +58,17 @@ public class DbConfig {
         return dataSource;
     }
 
+//    public PlatformTransactionManager annotationDrivenTransactionManager() {
+//        return transactionManager();
+//    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager(getEntityManager().getNativeEntityManagerFactory());
+        transactionManager.setDataSource(getDataSource());
+        transactionManager.setJpaDialect(new HibernateJpaDialect());
+        return transactionManager;
+    }
 //    @Bean
 //    public LocalSessionFactoryBean getSessionFactory() {
 //        LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
