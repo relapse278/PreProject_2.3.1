@@ -8,7 +8,7 @@
 <body>
 
 <h1>Users Task Preproject 2.3.1 !!!!</h1>
-    <h1 th:text="Test Test Test"/>
+    <h1 th:text="Test"/>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -16,6 +16,8 @@
             <th scope="col">Name</th>
             <th scope="col">Surname</th>
             <th scope="col">E-Mail</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
         </tr>
         </thead>
         <tr th:each="user: ${users}">
