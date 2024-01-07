@@ -38,11 +38,15 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @PostMapping("users/remove/{id}")
+    @GetMapping("users/delete")
     public String removeUser(@RequestParam("id") long id) {
         userService.removeUser(id);
         return "redirect:/users";
     }
 
-
+    @PostMapping("/users/edit")
+    public String editUser(@RequestParam("user") User user) {
+        userService.updateUser(user);
+        return "redirect:/users";
+    }
 }
