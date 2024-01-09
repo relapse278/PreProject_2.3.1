@@ -27,14 +27,12 @@ public class UserController {
         return "users";
     }
 
-    @PostMapping("/users/add")
-    public String addUser(@RequestParam("user") User user) {
-        if (user.getId() == 0) {
-           userService.addUser(user);
-        } else {
-            userService.updateUser(user);
-        }
-
+    @GetMapping("/add")
+    public String addUser(@RequestParam("name") String name,
+                          @RequestParam("surname") String surname,
+                          @RequestParam("email") String email) {
+        User user = new User(name, surname, email);
+        userService.addUser(user);
         return "redirect:/users";
     }
 
