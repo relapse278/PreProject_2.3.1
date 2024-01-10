@@ -24,6 +24,7 @@ private EntityManagerFactory emf;
     @Override
     public void addUser(User user) {
         EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
         entityManager.persist(user);
         entityManager.getTransaction().commit();
     }

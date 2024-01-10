@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.model.User;
 import web.service.UserService;
@@ -22,18 +23,22 @@ public class UserController {
 
     @GetMapping("/users")
     public String showUsers(Model model) {
-
         model.addAttribute("users", userService.listUsers());
         return "users";
     }
 
-    @GetMapping("/add")
-    public String addUser(@RequestParam("name") String name,
+    @PostMapping("/users")
+    public String createUser(@RequestParam("name") String name,
                           @RequestParam("surname") String surname,
                           @RequestParam("email") String email) {
         User user = new User(name, surname, email);
         userService.addUser(user);
         return "redirect:/users";
+    }
+
+    @RequestMapping("/add")
+    public String showAddUserView(){
+        return "add";
     }
 
     @GetMapping("users/delete")
@@ -42,8 +47,21 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @PostMapping("/users/edit")
-    public String editUser(@RequestParam("user") User user) {
+    @GetMapping("/users/edit")
+    public String editUser(@RequestParam("id") long id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
+        return "/edit";
+    }
+
+    @PostMapping("/edit")
+    public String editUser(@RequestParam("name") String name,
+                           @RequestParam("surname") String surname,
+                           @RequestParam("email") String email,
+                           @RequestParam("id") Long id) {
+        User user = userService.getUserById(id);
+        user.setFirstName(name);
+        user.setLastName(surname);
+        user.setEmail(email);
         userService.updateUser(user);
         return "redirect:/users";
     }
