@@ -12,16 +12,16 @@
   <form th:method="POST" th:action="@{/edit}" th:object="${user}">
     <div>
       <label for="id">ID</label>
-      <input id="id" th:field="${user.getId()}" type="text"/>
+      <input id="id" th:field="*{id}" type="text"/>
       <br>
       <label for="name">Name</label>
-      <input id="name" th:field="${user.getFirstName()}" type="text"/>
+      <input id="name" th:field="*{firstName}" type="text"/>
       <br>
       <label for="surname">Surname</label>
-      <input id="surname" th:field="${user.getLastName()}" type="text"/>
+      <input id="surname" th:field="*{lastName}" type="text"/>
       <br>
       <label for="email">E-Mail</label>
-      <input id="email" th:field="${user.getEmail()}" type="text"/>
+      <input id="email" th:field="*{email}" type="text"/>
       <br>
       <input type="submit" value="Save_User!"/>
     </div>
