@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,16 +54,24 @@ public class UserController {
         return "/edit";
     }
 
-    @PostMapping("/edit")
-    public String editUser(@RequestParam("name") String name,
-                           @RequestParam("surname") String surname,
-                           @RequestParam("email") String email,
-                           @RequestParam("id") Long id) {
-        User user = userService.getUserById(id);
-        user.setFirstName(name);
-        user.setLastName(surname);
-        user.setEmail(email);
-        userService.updateUser(user);
+    //@PostMapping(path = "/edit")
+    @PostMapping("/users/edit")
+//    public String submitForm(@ModelAttribute User user) {
+    public String submitForm(@RequestParam long id,
+                             @RequestParam String firstName,
+                             @RequestParam String lastName,
+                             @RequestParam String email) {
+        User updatedUser = userService.getUserById(id);
+        updatedUser.setFirstName(firstName);
+        updatedUser.setLastName(lastName);
+        updatedUser.setEmail(email);
+        userService.updateUser(updatedUser);
         return "redirect:/users";
+//        User updatedUser = userService.getUserById(user.getId());
+//        updatedUser.setFirstName(user.getFirstName());
+//        updatedUser.setLastName(user.getLastName());
+//        updatedUser.setEmail(user.getEmail());
+//        userService.updateUser(updatedUser);
+//        return "redirect:/users";
     }
 }

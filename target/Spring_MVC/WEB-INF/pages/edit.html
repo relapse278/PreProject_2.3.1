@@ -9,7 +9,7 @@
   <h1 th:text="EDIT"/>
   <br />
   <br />
-  <form th:method="POST" th:action="@{/edit}" th:object="${user}">
+  <form th:method="POST" th:action="@{/users/edit}" th:object="${user}">
     <div>
       <label for="id">ID</label>
       <input id="id" th:field="*{id}" type="text"/>
