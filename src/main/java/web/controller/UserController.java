@@ -4,14 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.model.User;
 import web.service.UserService;
-
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -54,9 +51,7 @@ public class UserController {
         return "/edit";
     }
 
-    //@PostMapping(path = "/edit")
     @PostMapping("/users/edit")
-//    public String submitForm(@ModelAttribute User user) {
     public String submitForm(@RequestParam long id,
                              @RequestParam String firstName,
                              @RequestParam String lastName,
@@ -67,11 +62,5 @@ public class UserController {
         updatedUser.setEmail(email);
         userService.updateUser(updatedUser);
         return "redirect:/users";
-//        User updatedUser = userService.getUserById(user.getId());
-//        updatedUser.setFirstName(user.getFirstName());
-//        updatedUser.setLastName(user.getLastName());
-//        updatedUser.setEmail(user.getEmail());
-//        userService.updateUser(updatedUser);
-//        return "redirect:/users";
     }
 }
